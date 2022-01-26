@@ -12,3 +12,16 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
+##############################################################################################
+#
+# Update this file to ignore commit
+# Especially ENV files.
+#
+# .env SUPPOSED TO BE HERE but remove to show all changes
+##############################################################################################
+
+.env.testing
+.env.prod
+phpunit.xml
+ngrok.exe

@@ -52,6 +52,10 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Configure the rate limiters for the application.
      *
+     * Avoid DDoS attack by limit request per user_id or ip
+     * 60 request per min is already 1 request/1 sec
+     * depend on your app, or just leave it default
+     *
      * @return void
      */
     protected function configureRateLimiting()

@@ -35,6 +35,8 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be hidden for serialization.
+     * Hide sensitive data from expose to JSON response array
+     * for each model using $hidden
      *
      * @var array<int, string>
      */

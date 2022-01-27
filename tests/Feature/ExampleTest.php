@@ -81,4 +81,16 @@ class ExampleTest extends TestCase
             "token" => true,
         ]);
     }
+
+    /**
+     * Testing global exception handler
+     */
+    public function test_get_user_handle_exceptions()
+    {
+        $this->json('GET', 'api/users')
+        ->assertStatus(403)
+        ->assertJson([
+            "message" => "Tindakan tidak dibenarkan , anda tidak mempunyai kebenaran!"
+        ]);
+    }
 }

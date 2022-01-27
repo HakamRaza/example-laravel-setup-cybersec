@@ -135,4 +135,35 @@ class ExampleTest extends TestCase
         ]);
     }
 
+    /**
+     * Testing token ability
+     */
+    public function test_user_token_can_remove_profile()
+    {
+        $user = User::where("id", 1)->first();
+        Sanctum::actingAs($user);
+
+        /**
+         * Assign role and permission
+         *
+         */
+        $this->json('PUT', 'api/user/1')
+        ->assertStatus(200)
+        ->assertJson([
+            "message" =>"user given admin role & have delete profile permission"
+        ]);
+
+        /**
+         *
+         * Check permission and role given
+         *
+         */
+        $this->json('DELETE', 'api/profile/1')
+        ->assertStatus(200)
+        ->assertJson([
+            "message" => "You can delete this profile"
+        ]);
+    }
+
+
 }

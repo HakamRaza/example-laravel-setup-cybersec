@@ -96,7 +96,23 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        /**
+         * Using abilities to user, by role, ability or permission
+         *
+         * Token is like general access communicate with server
+         * Then we have ability, role or permission to give specific permission to user
+         * for different service they can access.
+         *
+         * Here in this example we give ability to user using role spatie/larave-permission
+         * https://spatie.be/docs/laravel-permission/v5/installation-laravel
+         */
 
+         $user->assignRole('admin');
+         $user->givePermissionTo('delete profile');
+
+        return response()->json([
+            "message" =>"user given admin role & have delete profile permission",
+        ], 200);
     }
 
     /**

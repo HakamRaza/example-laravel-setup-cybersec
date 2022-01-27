@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Profile;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -45,5 +47,25 @@ class ProfileController extends Controller
         return response()->json([
             "message" =>"Information successfully obtained"
         ], 200);
+    }
+
+
+    public function destroy(Profile $profile)
+    {
+        $user = $user = User::where("id", 1)->first();
+
+        $hasPermission = $user->hasPermissionTo('delete profile');
+        $hasRole = $user->hasRole('admin');
+
+        if( $hasPermission && $hasRole)
+        {
+            return response()->json([
+                "message" =>"You can delete this profile",
+            ], 200);
+        }
+
+        return response()->json([
+            "message" =>"You cannot, booo.",
+        ], 403);
     }
 }

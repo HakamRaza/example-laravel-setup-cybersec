@@ -77,3 +77,6 @@ Route::post('/login', [UserController::class, "login"]);
 
 Route::put('/profile', [ProfileController::class, "update"]);
 Route::get('/profile/{profile}', [ProfileController::class, "show"]);
+
+Route::put('/user/{user}', [UserController::class, "update"])->middleware('auth:sanctum');
+Route::delete('/profile/{profile}', [ProfileController::class, "destroy"])->middleware(['auth:sanctum']);

@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -30,12 +31,24 @@ class Handler extends ExceptionHandler
     /**
      * Register the exception handling callbacks for the application.
      *
+     * Use a global response for any exceptions thrown by the app
+     *
      * @return void
      */
     public function register()
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        /**
+         * E.g To produce global response for unauthorized request
+         * A response with message is thrown
+         */
+        $this->renderable(function (AuthenticationException $e, $request) {
+            return response()->json([
+                'message' => "Tindakan tidak dibenarkan , anda tidak mempunyai kebenaran!"
+            ], 403);
         });
     }
 }

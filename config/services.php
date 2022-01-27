@@ -30,4 +30,14 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+
+    /***
+     * Register the added key inside ENV here
+     * This to add better orchestraction layer inside app
+     */
+    'testservice' => [
+        'key' => env("IMPORTANT_KEY"),
+        'test_key' => env("TEST_IMPORTANT_KEY "),
+    ],
+
 ];

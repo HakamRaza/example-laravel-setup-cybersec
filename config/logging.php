@@ -113,6 +113,19 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        /**
+         *
+         * add custom logging for maintainence or important evetns
+         * but dont overuse as it store in server hosting
+         *
+         * some events already auto log by 3rd service like bugsnag if implemented
+         *
+         */
+        'stuffs' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/stuffs.log'),
+        ],
     ],
 
 ];

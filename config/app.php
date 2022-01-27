@@ -37,6 +37,8 @@ return [
     | stack traces will be shown on every error that occurs within your
     | application. If disabled, a simple generic error page is shown.
     |
+    |
+    | MAKE SURE THIS IS FALSE, by default shoul be
     */
 
     'debug' => (bool) env('APP_DEBUG', false),

@@ -23,6 +23,19 @@ class Profile extends Model
      */
     protected $fillable = [
         'user_id',
+
+        /**
+         * prevent mass assignment by removing from $fillable
+         * or can use $guarded
+         *
+         */
+        // "salary"
+    ];
+
+    protected $guarded = [
         "salary"
     ];
+
+
+
 }

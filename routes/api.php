@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Profile;
 use App\Models\User;
@@ -73,3 +74,5 @@ Route::post('/mass-assignable', function (Request $request) {
 
 Route::apiResource('/user', UserController::class);
 Route::post('/login', [UserController::class, "login"]);
+
+Route::put('/profile', [ProfileController::class, "update"]);

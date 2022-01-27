@@ -93,4 +93,29 @@ class ExampleTest extends TestCase
             "message" => "Tindakan tidak dibenarkan , anda tidak mempunyai kebenaran!"
         ]);
     }
+
+    /**
+     * Testing global exception handler
+     */
+    public function test_validation_prevent_unintended_input()
+    {
+        $this->json('PUT', 'api/profile', [
+            'user_id' => 100,
+            'salary' =>  "random string instead of integer"
+        ])
+        ->assertStatus(422)
+        ->assertJson([
+            "message" => "The given data was invalid.",
+            "errors" => [
+                "user_id" => [
+                    "The selected user id is invalid."
+                ],
+                "salary" => [
+                    "The salary you know must be integer OK OK OK ???.",
+                    "The salary must be between 1000 and 10000."
+                ]
+            ]
+        ]);
+    }
+
 }

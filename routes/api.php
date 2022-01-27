@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,5 +16,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+
+Route::get('/test-log', function (Request $request) {
+
+    Log::channel('stuffs')->info('Date: '.now().', Cron job: SomeEvents'.', Status: Success, user_id: '.random_int(10,90));
+
     return $request->user();
 });

@@ -76,3 +76,4 @@ Route::apiResource('/user', UserController::class);
 Route::post('/login', [UserController::class, "login"]);
 
 Route::put('/profile', [ProfileController::class, "update"]);
+Route::get('/profile/{profile}', [ProfileController::class, "show"]);

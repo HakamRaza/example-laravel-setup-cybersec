@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
@@ -95,7 +96,7 @@ class ExampleTest extends TestCase
     }
 
     /**
-     * Testing global exception handler
+     * Testing input validation
      */
     public function test_validation_prevent_unintended_input()
     {
@@ -115,6 +116,22 @@ class ExampleTest extends TestCase
                     "The salary must be between 1000 and 10000."
                 ]
             ]
+        ]);
+    }
+
+
+    /**
+     * Testing policy
+     */
+    public function test_profile_view_fail_unauthorised_view()
+    {
+        $user = User::where("id", 1)->first();
+        Sanctum::actingAs($user);
+
+        $this->json('GET', 'api/profile/2')
+        ->assertStatus(403)
+        ->assertJson([
+            "message" => "You do not own this profile."
         ]);
     }
 

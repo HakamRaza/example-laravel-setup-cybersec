@@ -71,4 +71,5 @@ Route::post('/mass-assignable', function (Request $request) {
 
 
 
-Route::middleware('auth:sanctum')->apiResource('/user', UserController::class);
+Route::apiResource('/user', UserController::class);
+Route::post('/login', [UserController::class, "login"]);

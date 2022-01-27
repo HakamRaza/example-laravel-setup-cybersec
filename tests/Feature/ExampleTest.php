@@ -30,11 +30,6 @@ class ExampleTest extends TestCase
         ]);
     }
 
-
-
-
-
-
     /**
      * Attacker attempt to change salary value to RM 10
      * Prevent mass assignment
@@ -50,6 +45,40 @@ class ExampleTest extends TestCase
         ->assertJson([
             "user_id" => 1,
             "salary" => "4000",
+        ]);
+    }
+
+
+    /**
+     * Store user password by one way Hash
+     *
+     * Validate user by password hash cross check
+     */
+
+    public function test_new_user_with_password()
+    {
+        $name = "new user with number ".random_int(10,200);
+        $pass = "9455W0rD_15_535en7iv3";
+
+        $this->json('POST', 'api/user', [
+            'name' => $name,
+            'email' => "email".random_int(10,100)."@mail.com",
+            'password' => $pass
+        ])
+        ->assertOk()
+        ->assertJson([
+            "message" =>"user created"
+        ]);
+
+
+        $this->json('POST', 'api/login', [
+            'name' => $name,
+            'password' => $pass
+        ])
+        ->assertOk()
+        ->assertJson([
+            "message" =>"login success",
+            "token" => true,
         ]);
     }
 }

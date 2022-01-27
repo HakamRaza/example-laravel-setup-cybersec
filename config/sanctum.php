@@ -42,9 +42,13 @@ return [
     | considered expired. If this value is null, personal access tokens do
     | not expire. This won't tweak the lifetime of first-party sessions.
     |
+    | set expiration time here if you use sanctum
+    | mobile app mobile can set 2 weeks, or infinite (null)
+    | but web app could be only one day or two
+    | for JWT - configure inside config/jwt.php , ttl
     */
 
-    'expiration' => null,
+    'expiration' => 3600,
 
     /*
     |--------------------------------------------------------------------------

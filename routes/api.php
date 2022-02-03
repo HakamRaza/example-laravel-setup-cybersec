@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +70,60 @@ Route::post('/mass-assignable', function (Request $request) {
 
     return $user;
 });
+
+
+Route::post('/raw-query', function (Request $request)
+{
+    $id = $request->id;
+
+    /**
+     * In the select() method DB, it alreay using PDO in the backgroud which
+     * bind parameter and sanitize bind variables. Here 2 methods syntax can be
+     * use.
+     */
+
+    // 1. positional binding
+    $secureRawA = DB::select(DB::raw("
+        SELECT COUNT(id) AS TOTAL
+        FROM users
+        WHERE id = ?
+    ",[$id]));
+
+    // 2. positional binding
+    $secureRawB = DB::select(DB::raw("
+        SELECT COUNT(id) AS TOTAL
+        FROM users
+        WHERE id = :thisId
+    ",[":thisId" => $id ]));
+
+    // 3. another method further can sanitize the input format using sprintf
+    // or even better if you can add validation to request which specific data type and value
+    // https://www.php.net/manual/en/function.sprintf.php
+    $secureRawC = DB::select(DB::raw(sprintf("
+        SELECT COUNT(id) AS TOTAL
+        FROM users
+        WHERE id = %d
+    ", $id )));
+
+    /**
+     * INSECURE
+     * INSECURE
+     *
+     * This is directly concatenate to query in which skip PDO
+     * parameter provided by DB:select()
+     */
+    $insecureRaw = DB::select(DB::raw("
+        SELECT COUNT(id) AS TOTAL
+        FROM users
+        WHERE id = $id
+    "));
+
+
+    return response()->json([
+        "message" => "Raw query"
+    ], 200);
+});
+
 
 
 

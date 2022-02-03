@@ -27,3 +27,4 @@ Do go through the commits one by one per topics :
     13. Request input validation
     14. Model Policy
     15. Role and Permission implementation
+    16. Raw Query
